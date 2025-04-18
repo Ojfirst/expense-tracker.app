@@ -7,7 +7,51 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1>Expense Tracker</h1>
+
+    <div class="container">
+      <form action="">
+        <input type="text" name="amount" id="amonut-input" placeholder="Amount" step="0.01">
+        <input type="text" name="discription" id="discription-input"          placeholder="Discription" step="0.01">
+        <select name="category" id="category-input">
+          <option value=""></option>
+          <option value="Food">Food</option>
+          <option value="Travel">Travel</option>
+          <option value="Bills">Bills</option>
+        </select>
+        <button type="submit">Add Expense</button>
+      </form>
+
+      <div class="expense-list">
+        <table id="expense-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+            <tbody id="expense-list">
+              <!-- Expense items will be added here dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="summary">
+          <p>Total: $0.00</p>
+          <ul id="category-total"></ul>
+        </div>
+
+    </div>    
+
     
+      
+
+
+        
+    </form>
 </body>
 <script src="app.js"></script>
 </html>
