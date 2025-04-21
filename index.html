@@ -10,30 +10,35 @@
     <h1>Expense Tracker</h1>
 
     <div class="container">
-      <form action="">
-        <input type="text" name="amount" id="amonut-input" placeholder="Amount" step="0.01">
-        <input type="text" name="discription" id="discription-input"          placeholder="Discription" step="0.01">
-        <select name="category" id="category-input">
+      <form action="" id="expense-form">
+        <input type="number" name="amount" id="amount-input" required placeholder="Amount" step="0.01">
+        <input type="text" name="discription" id="discription-input" required placeholder="Discription" step="0.01">
+        <select name="category" id="category-input" required>
           <option value=""></option>
           <option value="Food">Food</option>
           <option value="Travel">Travel</option>
           <option value="Bills">Bills</option>
         </select>
-        <button type="submit">Add Expense</button>
+        <input type="date" id="date-expense" aria-label="Date Expense" min="2024-01-01">
+
+        <button type="submit" id="add-btn">Add Expense</button>
       </form>
+
+      <small id="error-message" class="error-message hidden"></small>
 
       <div class="expense-list">
         <table id="expense-table">
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Description</th>
+              <th>ID</th>
               <th>Amount</th>
+              <th>Description</th>
               <th>Category</th>
+              <th>Date</th>
               <th>Action</th>
             </tr>
           </thead>
-            <tbody id="expense-list">
+            <tbody id="expense-data">
               <!-- Expense items will be added here dynamically -->
             </tbody>
           </table>
@@ -41,7 +46,9 @@
 
         <div id="summary">
           <p>Total: $0.00</p>
-          <ul id="category-total"></ul>
+          <ul id="category-total">
+          
+          </ul>
         </div>
 
     </div>    
