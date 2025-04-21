@@ -4,7 +4,7 @@ const categories = ['food', 'Travel', 'Bills'];
 // Load expenses from localStorage, default to empty array
 let expenses = JSON.parse(localStorage.getItem('expenses') || '[]');
 
-// PlaceHolder functions
+// Add expense
 const addExpense = (expenses, newExpense) => {
   // Validate newExpense
   if (
@@ -28,9 +28,9 @@ const addExpense = (expenses, newExpense) => {
   return [...expenses, expense];
 }
 
+// Delete an expense by ID
 const deleteExpense = (expenses, id) => {
-  // to implement later
-  return expenses
+  return expenses.filter((expense) => expense.id !== id);
 }
 
 const calculateExpense = (expenses) => {
@@ -99,3 +99,27 @@ expenseForm.addEventListener('submit', (event) => {
     showError('Plese enter a valid amount, description and category.')
   }
 })
+
+
+// Handle delete button clicks
+const table = document.querySelector('#expense-table');
+table.addEventListener('click', (e) => {
+  if (e.target.matches('button')) {
+    const id = Number(e.target.dataset.id)
+    expenses = deleteExpense(expenses, id);
+    saveExpenses(expenses);
+    renderExpenses(expenses);
+  } 
+})
+
+
+// Display error message!
+const showError = (message) => {
+  const errorEl = document.getElementById('error-message');
+  errorEl.textContent = message;
+  errorEl.classList.remove('hidden');
+
+  setTimeout(() => {
+      errorEl.classList.add('hidden')
+  }, 3000);
+}
