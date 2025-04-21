@@ -60,7 +60,10 @@ const renderExpenses = (expenses) => {
 
 const renderSummary = (expenses) => {}
 
-const saveExpenses = (expenses) => {}
+// Save Expense to localStorage
+const saveExpenses = (expenses) => {
+  localStorage.setItem('expenses', JSON.stringify(expenses))
+}
 
 
 // Handle for submission 
