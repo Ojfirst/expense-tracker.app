@@ -5,9 +5,27 @@ const categories = ['food', 'Travel', 'Bills'];
 let expenses = JSON.parse(localStorage.getItem('expenses') || '[]');
 
 // PlaceHolder functions
-const addEpense = (expenses, newExpense) => {
+const addExpense = (expenses, newExpense) => {
+  // Validate newExpense
+  if (
+    !newExpense.amount ||
+    newExpense.amount <= 0 ||
+    !newExpense.description.trim() ||
+    !categories.includes(newExpense.category)
+  ) {
+    return expenses; // Return unchange if invalid
+  }
 
-  return expenses;
+  // Create expense with id & date 
+  const expense = {
+    id: Date.now(),
+    amount: newExpense.amount,
+    description: newExpense.description,
+    category: newExpense.category,
+    date: new Date().toISOString().split('T')[0]
+  };
+  // Return new array
+  return [...expenses, expense];
 }
 
 const deleteExpense = (expenses, id) => {
@@ -19,8 +37,62 @@ const calculateExpense = (expenses) => {
   return {total: 0, byCategory: {Food: 0, Travel: 0, Bill: 0}}
 }
 
-const renderExpenses = (expenses) => {}
+// Display Expenses
+const renderExpenses = (expenses) => {
+  const expenseList = document.getElementById('expense-data'); // tbody
+  expenseList.innerHTML = ''; // clear table
+
+  expenses.forEach((expense) => {
+    const expensesItem = document.createElement('tr'); // Create new row per expense
+    expensesItem.setAttribute('class', 'expenses-item');
+    expensesItem.innerHTML = `
+    <td>${expense.id}</td>
+    <td>N ${expense.amount.toFixed(2)}</td>
+    <td>${expense.description}</td>
+    <td>${expense.category}</td>
+    <td>${expense.date}</td>
+    <td><button data-id='${expense.id}'>Delete</button</td>
+    `;
+
+    expenseList.appendChild(expensesItem);  // AppendChild each row to HTML(tbody)
+  })
+}
 
 const renderSummary = (expenses) => {}
 
 const saveExpenses = (expenses) => {}
+
+
+// Handle for submission 
+const expenseForm = document.querySelector('#expense-form')
+expenseForm.addEventListener('submit', (event) => {
+  event.preventDefault(); // Prevent page from reloading
+  
+  const amountInput = document.querySelector('#amount-input');
+  const descriptionInput = document.querySelector('#discription-input');
+  const categoryInput = document.querySelector('#category-input');
+
+  // Get input Value
+  const newExpense = {
+    amount : amountInput.valueAsNumber,
+    description : descriptionInput.value,
+    category : categoryInput.value
+  }
+
+  // Add expense
+  const updatedExpenses = addExpense(expenses, newExpense);
+
+  // Check if expense was added (not valid)
+  if (updatedExpenses !== expenses) {
+    expenses = updatedExpenses;
+    saveExpenses(expenses);
+    renderExpenses(expenses);
+
+    // Clear inputs
+    amountInput.value = '';
+    descriptionInput.value = '';
+    // keep category as-is
+  } else {
+    showError('Plese enter a valid amount, description and category.')
+  }
+})
