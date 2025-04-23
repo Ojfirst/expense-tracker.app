@@ -26,14 +26,6 @@ p {
   line-height: 1.6;
 } 
 
-a {
-  color: var(--accent-color);
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-
 button {
   background-color: var(--primary-color);
   color: white;
@@ -87,6 +79,7 @@ form input {
   border-radius: 4px;
   width: 100%;
   max-width: 300px;
+  outline: none;
 }
 
 form input:hover {
@@ -94,6 +87,15 @@ form input:hover {
   transition: all 0.5s ease-in-out;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
+.flex-colum {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 20%;
+} 
 
 form select {
   padding: 10px;
@@ -106,7 +108,6 @@ form select {
 .table-wrapper {
   overflow: auto;
   width: 100%;
-  font-size: 12px;
 }
 /* Ensure table doesnt shrink too much */
 table {
@@ -151,12 +152,26 @@ th, td {
 
 @media (max-width: 600px) {
 
-  #expense input,
-  #expense select,
-  #expense button {
+  form {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    margin-bottom: 10px;
-    display: block;
+  }
+
+  form select, button {
+    width: 43%;
+  }
+
+  .flex-colum {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+  }
+
+  .table-wrapper {
+    font-size: 12px;
   }
 
   #summary {
