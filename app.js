@@ -1,8 +1,9 @@
 // List of valid categories (used in form validation)
-const categories = ['food', 'Travel', 'Bills'];
+const categories = ['Food', 'Travel', 'Bills'];
 
 // Load expenses from localStorage, default to empty array
 let expenses = JSON.parse(localStorage.getItem('expenses') || '[]');
+
 
 // Add expense
 const addExpense = (expenses, newExpense) => {
@@ -33,9 +34,51 @@ const deleteExpense = (expenses, id) => {
   return expenses.filter((expense) => expense.id !== id);
 }
 
-const calculateExpense = (expenses) => {
-  return {total: 0, byCategory: {Food: 0, Travel: 0, Bill: 0}}
+//Calculate total and per-category sums
+const calculateSummary = (expenses) => {
+  // calculate total by summing all expense amounts
+  // reduce: Like adding numbers in a loop, start at 0
+  // Add current expense's to running sum
+  const total = expenses.reduce((sum, expense) =>  {
+    return sum + expense.amount
+  }, 0); // start at 0
+
+  // Cal sums for each category (Food, Travel, Bills)
+  // Build an object with category total
+  const byCategory = expenses.reduce((acc, expense) => {
+    // Add expense amount to its category's total
+    // if category doesn't exist, start at 0
+    acc[expense.category] = (acc[expense.category] || 0) + expense.amount;
+    return acc;
+  }, {Food: 0, Travel: 0, Bills: 0});
+  
+// Return object with total and category sums
+  return {total, byCategory};
 }
+
+
+// Display all sum expenses
+const renderSummary = (expenses) => {
+  const totalElement = document.querySelector('#summary p');
+  totalElement.innerHTML = '';
+  const categoryListElement = document.querySelector('#category-total');
+
+  if (!totalElement || !categoryListElement) {
+    showError('Something went wrong') // Check if element exist to avoid error
+    return;
+  }
+
+  // Update total display
+  totalElement.textContent = `Total: ${expenses.total.toFixed(2)}`
+  categoryListElement.innerHTML = ''; // clear existing category list to prevent duplicate
+  for ( const [category, amount] of Object.entries(expenses.byCategory)) {
+    const listItem = document.createElement('li');
+    // Set text with category and formated amount
+    listItem.textContent = `${category}: N ${amount.toFixed(2)}` ;
+    categoryListElement.appendChild(listItem); // Append <li> to <ul>
+  }
+}
+
 
 // Display Expenses
 const renderExpenses = (expenses) => {
@@ -58,11 +101,13 @@ const renderExpenses = (expenses) => {
   })
 }
 
-const renderSummary = (expenses) => {}
 
-// Save Expense to localStorage
 const saveExpenses = (expenses) => {
   localStorage.setItem('expenses', JSON.stringify(expenses))
+}
+
+const loadExpenses = (expenses) => {
+  JSON.parse(localStorage.getItem(expenses)) || [];
 }
 
 
@@ -91,6 +136,9 @@ expenseForm.addEventListener('submit', (event) => {
     saveExpenses(expenses);
     renderExpenses(expenses);
 
+    // calculate and render summary
+    renderSummary(calculateSummary(expenses))
+
     // Clear inputs
     amountInput.value = '';
     descriptionInput.value = '';
@@ -101,6 +149,7 @@ expenseForm.addEventListener('submit', (event) => {
 })
 
 
+
 // Handle delete button clicks
 const table = document.querySelector('#expense-table');
 table.addEventListener('click', (e) => {
@@ -109,8 +158,15 @@ table.addEventListener('click', (e) => {
     expenses = deleteExpense(expenses, id);
     saveExpenses(expenses);
     renderExpenses(expenses);
+    // calculate and render summary
+    renderSummary(calculateSummary(expenses))
   } 
 })
+
+
+
+
+
 
 
 // Display error message!
@@ -123,3 +179,7 @@ const showError = (message) => {
       errorEl.classList.add('hidden')
   }, 3000);
 }
+
+
+
+console.log('initial expenses:',  expenses)

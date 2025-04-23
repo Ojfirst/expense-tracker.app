@@ -132,6 +132,16 @@ div.expense-list {
   margin: 0;
 }
 
+#summary {
+  display: flex;
+  justify-content: center;
+  
+}
+
+#summary ul {
+  list-style: none;
+}
+
 
 
 
