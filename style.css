@@ -103,17 +103,21 @@ form select {
   max-width: 300px;
 }
 
-div.expense-list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  
-  width: 70%;
-  margin-top: 10px;
+.table-wrapper {
+  overflow: auto;
+  width: 100%;
+  font-size: 12px;
+}
+/* Ensure table doesnt shrink too much */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 300px; 
 }
 
-#expense-table {
-  text-align: center;
+th, td {
+  padding: 8px;
+  white-space: nowrap;
 }
 
 .error-message {
@@ -146,8 +150,17 @@ div.expense-list {
 
 
 @media (max-width: 600px) {
-  input, select {
+
+  #expense input,
+  #expense select,
+  #expense button {
     width: 100%;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  #summary {
+    padding-top: 1rem;
   }
 }
 

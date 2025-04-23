@@ -10,7 +10,7 @@ try {
   expenses = stored ? JSON.parse(stored) : [];
 } catch (error) {
   // Log error if JSON parsing fails (e.g., corrupted data)
-  console.error("Failed to load expenses from localStorage:", error);
+  showError("Failed to load expenses from localStorage:", error);
   // Fallback to empty array
   expenses = [];
 }
