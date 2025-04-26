@@ -53,12 +53,13 @@ const calculateSummary = (expenses) => {
     // Add current expense's amount to running sum
     return sum + expense.amount;
   }, 0); // Start at 0
+
+  
   // Calculate sums for each category
   const byCategory = expenses.reduce((acc, expense) => {
     // Add amount to category's total,  start at 0 if undefined
     acc[expense.category] = (acc[expense.category] || 0) + expense.amount;
-    return acc; // Return updated accumulator 
-    
+    return acc; // Return updated accumulator     
   }, { Food: 0, Travel: 0, Bills: 0 }); // Start with zeros
 
   // Calculate count for each category
@@ -69,8 +70,19 @@ const calculateSummary = (expenses) => {
     return  newAcc; // Return update accumulator
   }, {Food: 0, Travel: 0, Bills: 0} ); // Start with zeros
 
+
+
+  // TODO
+  const avgByCategory = Object.keys(byCategory).reduce((acc, category) => {
+    const newAcc = {...acc}; // New object for immutability
+    const count = countByCategory[category] || 1; //Avoid division by zero
+    // Calculate average: 0 if no expense, else total / count
+    newAcc[category] = count === 0 ? 0 : byCategory[category] / count;
+    return newAcc; // Update accumulator
+  }, {Food: 0, Travel: 0, Bills: 0}); // At zero for all category
+
   // Return total and category sums
-  return { total, byCategory, countByCategory};
+  return { total, byCategory, countByCategory, avgByCategory};
 };
 
 // Display summary in DOM
@@ -94,12 +106,12 @@ const renderSummary = (summary) => {
   for (const [category, amount] of Object.entries(summary.byCategory)) {
     // Create <li> for each category
     const listItem = document.createElement("li");
-    const count = summary.countByCategory[category] // Get count
+    const count = summary.countByCategory[category] || 0; // Get count
+    const avg = summary.avgByCategory[category] || 0; // Get avg expense by category
     // Set text with category and formatted amount
-    listItem.textContent = `${category}: N ${amount.toFixed(2)}  (Entries: ${count})`;
+    listItem.textContent = `${category}: N ${amount.toFixed(2)}  (Entries: ${count},  Avg: N ${avg.toFixed(2)})`;
     // Append <li> to <ul>
     categoryListElement.appendChild(listItem);
-    console.log(category, amount, count)
   }
 
   // Object.keys(summary.byCategory).forEach((category) => {
