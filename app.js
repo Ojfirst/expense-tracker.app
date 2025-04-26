@@ -37,6 +37,7 @@ const addExpense = (expenses, newExpense) => {
   };
   // Return new array with expense added (immutable, FP)
   return [...expenses, expense];
+
 };
 
 // Delete an expense by ID
@@ -54,13 +55,22 @@ const calculateSummary = (expenses) => {
   }, 0); // Start at 0
   // Calculate sums for each category
   const byCategory = expenses.reduce((acc, expense) => {
-    // Add amount to category's total, start at 0 if undefined
+    // Add amount to category's total,  start at 0 if undefined
     acc[expense.category] = (acc[expense.category] || 0) + expense.amount;
-    // Return updated accumulator
-    return acc;
+    return acc; // Return updated accumulator 
+    
   }, { Food: 0, Travel: 0, Bills: 0 }); // Start with zeros
+
+  // Calculate count for each category
+  const countByCategory = expenses.reduce((acc, expense) => {
+    const newAcc = {...acc}; // create new object to avoid mutating acc
+    //Add count to category's total, start with zeros
+    newAcc[expense.category] = (newAcc[expense.category] || 0) + 1;
+    return  newAcc; // Return update accumulator
+  }, {Food: 0, Travel: 0, Bills: 0} ); // Start with zeros
+
   // Return total and category sums
-  return { total, byCategory };
+  return { total, byCategory, countByCategory};
 };
 
 // Display summary in DOM
@@ -79,14 +89,28 @@ const renderSummary = (summary) => {
   // Clear category list to prevent duplicates
   categoryListElement.innerHTML = "";
   // Loop through byCategory object
+
+
   for (const [category, amount] of Object.entries(summary.byCategory)) {
     // Create <li> for each category
     const listItem = document.createElement("li");
+    const count = summary.countByCategory[category] // Get count
     // Set text with category and formatted amount
-    listItem.textContent = `${category}: N ${amount.toFixed(2)}`;
+    listItem.textContent = `${category}: N ${amount.toFixed(2)}  (Entries: ${count})`;
     // Append <li> to <ul>
     categoryListElement.appendChild(listItem);
+    console.log(category, amount, count)
   }
+
+  // Object.keys(summary.byCategory).forEach((category) => {
+  //   const amount = summary.byCategory[category];
+  
+  //   const listItem = document.createElement("li");
+  //     // Set text with category and formatted amount
+  //     listItem.textContent = `${category}: N ${amount.toFixed(2)}`;
+  //     // Append <li> to <ul>
+  //     categoryListElement.appendChild(listItem);
+  // })
 };
 
 // Display expenses in table
@@ -132,6 +156,8 @@ const saveExpenses = (expenses) => {
     // Show user-friendly error
     showError("Could not save expenses");
   }
+
+  console.log(expenses)
 };
 
 // Handle form submission
