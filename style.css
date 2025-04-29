@@ -20,25 +20,26 @@ body {
 }   
 
 h1, h2, h3, h4, h5, h6 {
-  color: var(--primary-color);
+  color: var(--secondary-color);
+  text-align: center;
 }
 p {
   line-height: 1.6;
 } 
 
 button {
-  background-color: var(--primary-color);
+  background-color: var(--secondary-color);
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
-  
 
   cursor: pointer;
   font-size: var(--font-size);
 }
+
 button:hover {
-  background-color: var(--accent-color);
+  opacity: 0.8;
 } 
 
 div.container {
@@ -60,7 +61,7 @@ div.container {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   margin-top: 2rem;
 }
 
@@ -87,22 +88,22 @@ form input:hover {
   transition: all 0.5s ease-in-out;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
-
-.flex-colum {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  width: 20%;
-} 
+ 
 
 form select {
   padding: 10px;
   border: 1px solid var(--secondary-color);
   border-radius: 4px;
-  width: 100%;
-  max-width: 300px;
+  max-width: 100px;
+  margin-right: 0.5rem;
+}
+
+.for-mobile-device {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .table-wrapper {
@@ -120,6 +121,11 @@ th, td {
   padding: 8px;
   white-space: nowrap;
 }
+
+.hidden {
+  display: none;
+}
+
 
 .error-message {
   color: #ff4444;
@@ -142,7 +148,6 @@ th, td {
   justify-content: center;
   
 }
-
 #summary ul {
   list-style: none;
 }
@@ -152,26 +157,37 @@ th, td {
 
 @media (max-width: 600px) {
 
+  button {
+    border: none;
+    padding: 10px 10px;
+    font-size: 12px;
+  }
+
   form {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
 
-  form select, button {
-    width: 43%;
+  form input {
+    width: 96%;
+    max-width: none;
   }
 
-  .flex-colum {
+  form select, button {
+    max-width: none;
+    width: 100%;
+  }
+
+  .for-mobile-device {
     display: flex;
-    flex-direction: row;
     justify-content: center;
-    gap: 5px;
+    gap: 0.5rem;
     width: 100%;
   }
 
   .table-wrapper {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   #summary {

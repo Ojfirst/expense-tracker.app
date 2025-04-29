@@ -125,6 +125,41 @@ const renderSummary = (summary) => {
   // })
 };
 
+
+
+
+// Update Expenses by ID
+const updateExpense = (expenses, updatedExpense) => {
+  // Validation updatedExpense
+  if (
+    !updatedExpense.amount ||
+    updatedExpense.amount <= 0 ||
+    !updatedExpense.description.trim() ||
+    !['Food', 'Travel', 'Bills'].includes(updatedExpense.category)
+  ) {
+    return expenses;
+  }
+
+  // map expenses, updating the matching ID
+  const newExpenses = expenses.map((expense) =>
+    expense.id === updatedExpense.id 
+    ? {
+      ...expense,
+      id: Date.now(), // Unique ID from timestamp
+      amount: updatedExpense.amount,
+      description: updatedExpense.description,
+      category: updatedExpense.category,
+      date: new Date().toISOString().split('T')[0], // Update date
+    } 
+    : expense
+  );
+
+  return newExpenses
+};
+
+
+
+
 // Display expenses in table
 const renderExpenses = (expenses) => {
   // Select <tbody> for expense rows
@@ -150,7 +185,10 @@ const renderExpenses = (expenses) => {
       <td>${expense.description}</td>
       <td>${expense.category}</td>
       <td>${expense.date}</td>
-      <td><button data-id="${expense.id}">Delete</button></td>
+      <td>
+      <button data-id="${expense.id}" class='delete-btn'>Delete</button>
+      <button data-id="${expense.id}" class='edit-btn'>Edit</button>
+      </td>
     `;
     // Append row to <tbody>
     expenseList.appendChild(expensesItem);
@@ -228,7 +266,7 @@ if (table) {
   // Add click listener for event delegation
   table.addEventListener("click", (e) => {
     // Check if clicked element is a button
-    if (e.target.matches("button")) {
+    if (e.target.matches(".delete-btn")) {
       // Get expense ID
       const id = Number(e.target.dataset.id);
       // Delete expense
@@ -286,6 +324,81 @@ if (
   // Show error if elements missing
   showError("Required DOM elements not found");
 }
+
+
+
+
+// handle Edit button clicks
+const initEditFeature = () => {
+  const editForm = document.querySelector('#edit-expense-form');
+  if (!editForm) {
+    showError('Edit form not found');
+    return;
+  }
+
+  // Handle edit button clicks
+  const table = document.querySelector('#expense-table');
+  if (table) {
+    table.addEventListener('click', (e) => {
+      if (e.target.matches('.edit-btn')) {
+        const  id = Number(e.target.dataset.id);
+        const expense = expenses.find((exp) => exp.id === id);
+        if (expense) {
+          // Populate form
+          document.querySelector('#edit-amount-input').value = expense.amount;
+          document.querySelector('#edit-description-input').value = expense.description;
+          document.querySelector('#edit-category-input').value = expense.category;
+          editForm.dataset.id = id; // Store ID in form
+          editForm.classList.remove('hidden');
+          expenseForm.classList.add('hidden');
+        } else {
+          showError('Expense not found')
+        }
+      }
+    });
+  }
+
+
+  // Handle for submission
+  editForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const updatedExpense = {
+      id: Number(editForm.dataset.id),
+      amount: document.querySelector('#edit-amount-input').valueAsNumber,
+      description: document.querySelector('#edit-description-input').value,
+      category: document.querySelector('#edit-category-input').value,
+    };
+
+    const newExpenses = updateExpense(expenses, updatedExpense)
+    console.log('Expenses before:', expenses, 'After:', newExpenses)
+    if (newExpenses !== expenses) {
+      expenses = newExpenses;
+      saveExpenses(expenses);
+      renderExpenses(expenses);
+      renderSummary(calculateSummary(expenses));
+      editForm.classList.add('hidden'); // Hide form
+      expenseForm.classList.remove('hidden');
+    } else {
+      showError('Please enter a valid amount, description, and category')
+    }
+  });
+};
+
+//Initialize edit feature after DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+  initEditFeature();
+})
+
+
+
+
+
+
+
+
+
+
 
 // Log initial expenses for debugging
 console.log("Initial expenses:", expenses);
