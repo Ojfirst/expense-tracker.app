@@ -384,12 +384,13 @@ const initEditFeature = () => {
   });
 
   // Cancel button click
-  const cancelButton = document.querySelector('ancel-btn');
+  const cancelButton = document.querySelector('#cancel-btn');
   if (cancelButton) {
     cancelButton.addEventListener('click', (e) => {
       e.preventDefault();
       console.log('Edit button clicked')
       editForm.classList.add('hidden');
+      expenseForm.classList.remove('hidden');
 
       // Reset form
       const amountInput = document.querySelector('#edit-amount-input');
@@ -398,10 +399,12 @@ const initEditFeature = () => {
       if (amountInput && descriptionInput && categoryInput) {
         amountInput.value = '';
         descriptionInput.value = '';
-        categoryInput.value = '';
+        categoryInput.value = 'Food';
       }
     });
-  } 
+  } else {
+    console.warn('cancel button not found')
+  }
 };
 
 
