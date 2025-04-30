@@ -65,6 +65,15 @@ div.container {
   margin-top: 2rem;
 }
 
+.container-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
 div.container p {
   margin: 0;
   padding: 0;
