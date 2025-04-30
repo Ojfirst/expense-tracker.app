@@ -380,6 +380,28 @@ const initEditFeature = () => {
       showError('Please enter a valid amount, description, and category')
     }
   });
+
+  // Cancel button click
+  const cancelButton = document.querySelector('ancel-btn');
+  if (cancelButton) {
+    cancelButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('Edit button clicked')
+      editForm.classList.add('hidden');
+
+      // Reset form
+      const amountInput = document.querySelector('#edit-amount-input');
+      const descriptionInput = document.querySelector('#edit-amount-input');
+      const categoryInput = document.querySelector('#edit-amount-input');
+      if (amountInput && descriptionInput && categoryInput) {
+        amountInput.value = '';
+        descriptionInput.value = '';
+        categoryInput.value = '';
+      }
+    });
+  } else {
+    showError('Something went wrong')
+  }
 };
 
 //Initialize edit feature after DOM loads
