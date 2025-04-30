@@ -206,8 +206,6 @@ const saveExpenses = (expenses) => {
     // Show user-friendly error
     showError("Could not save expenses");
   }
-
-  console.log(expenses)
 };
 
 // Handle form submission
@@ -371,7 +369,6 @@ const initEditFeature = () => {
     };
 
     const newExpenses = updateExpense(expenses, updatedExpense)
-    console.log('Expenses before:', expenses, 'After:', newExpenses)
     if (newExpenses !== expenses) {
       expenses = newExpenses;
       saveExpenses(expenses);
@@ -393,12 +390,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+// Filter expense by category (pure function)
+const filterExpenses = (expenses, category) => {
+  if (category == 'All') return expenses;
+  return expenses.filter((expense )=> expense.category === category);
+}
 
+// Render filter expenses and summary
+const renderFilteredExpenses = (category) => {
+  const filteredExpenses = filterExpenses(expenses, category);
 
+  if (!filteredExpenses) return expenses;
+  renderExpenses(filteredExpenses);
+  renderSummary(calculateSummary(filteredExpenses));
+}
 
+// Initialized filter 
+const initFilter = () => {
+  const filterSelect = document.querySelector('#filter-category');
+  if (!filterSelect){
+    showError('Selection not found');
+    return;
+  }
+  filterSelect.addEventListener('change', (e) => {
+    renderFilteredExpenses(e.target.value);
+  });
+};
 
-
-
-
-// Log initial expenses for debugging
-console.log("Initial expenses:", expenses);
+// Initialize filter feature after DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+  initFilter();
+})
