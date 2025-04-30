@@ -242,6 +242,7 @@ if (expenseForm) {
       // Update table and summary
       renderExpenses(expenses);
       renderSummary(calculateSummary(expenses));
+      
       // Clear inputs
       amountInput.value = "";
       descriptionInput.value = "";
@@ -374,6 +375,7 @@ const initEditFeature = () => {
       saveExpenses(expenses);
       renderExpenses(expenses);
       renderSummary(calculateSummary(expenses));
+      showError('Expense updated');
       editForm.classList.add('hidden'); // Hide form
       expenseForm.classList.remove('hidden');
     } else {
@@ -405,7 +407,7 @@ const initEditFeature = () => {
 
 // Filter expense by category (pure function)
 const filterExpenses = (expenses, category) => {
-  if (category == 'All') return expenses;
+  if (category === 'All') return expenses;
   return expenses.filter((expense )=> expense.category === category);
 }
 
@@ -436,7 +438,7 @@ const initFilter = () => {
     ResetFilterSelect.addEventListener('click', (e) => {
       e.preventDefault();
       filterSelect.value = 'All';
-      renderFilteredExpenses('All')
+      renderFilteredExpenses('All');
     })
   } else {
     showError('Something went wrong!')

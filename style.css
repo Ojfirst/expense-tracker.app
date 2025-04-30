@@ -1,7 +1,8 @@
 :root {
-  --primary-color: goldenrod;
+  --primary-color: #850303;
   --secondary-color: darkslategray;
-  --accent-color: #ff6347; /* Tomato */   
+  --secondary-color2: #ff8c00;
+  --accent-color: #ff2d55; /* Tomato */   
   --background-color: #f0f0f0; /* Light gray */
   --font-family: 'Arial, sans-serif';
   --font-size: 16px;
@@ -10,8 +11,8 @@
 body {
   font-family: var(--font-family);
   font-size: var(--font-size);
-  background-color: var(--background-color);
-  color: var(--secondary-color);
+  background-color: white;
+  color: black;
   margin: 0;
   padding: 0;
   line-height: 1.5;
@@ -22,13 +23,14 @@ body {
 h1, h2, h3, h4, h5, h6 {
   color: var(--secondary-color);
   text-align: center;
+  color: black;
 }
 p {
   line-height: 1.6;
 } 
 
 button {
-  background-color: var(--secondary-color);
+  background-color: var(--accent-color);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -39,7 +41,9 @@ button {
 }
 
 button:hover {
+  transition: all 0.2s ease-in-out;
   opacity: 0.8;
+  color: black;
 } 
 
 div.container {
@@ -50,7 +54,7 @@ div.container {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px; 
 
-  background-color: white;
+  background-color: #fdff8f;
   border: 1px solid var(--secondary-color); 
 
   transition: all 0.3s ease;
@@ -105,12 +109,14 @@ form input:hover {
 }
  
 
-form select {
+select {
   padding: 10px;
-  border: 1px solid var(--secondary-color);
+  border: none;
   border-radius: 4px;
   max-width: 100px;
   margin-right: 0.5rem;
+  color: #f0f0f0;
+  background-color: #333;
 }
 
 .for-mobile-device {
@@ -143,6 +149,9 @@ th, td {
 
 
 .error-message {
+  display: block;
+  min-height: 2rem;
+  overflow: hidden;
   color: #ff4444;
   padding: 8px;
   margin-top: 5px;
