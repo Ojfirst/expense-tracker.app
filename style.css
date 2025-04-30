@@ -65,6 +65,12 @@ div.container {
   margin-top: 2rem;
 }
 
+div.container p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
 form {
   display: flex;
   flex-direction: row;
