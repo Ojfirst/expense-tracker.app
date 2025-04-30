@@ -16,7 +16,7 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.5;
-
+  overflow: hidden;
   
 }   
 
@@ -131,16 +131,39 @@ select {
   overflow: auto;
   width: 100%;
 }
+
+
+.expense-list {
+  background-color: #e2fa5c;
+  width: 70vw;
+  height: 40vh;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+
 /* Ensure table doesnt shrink too much */
 table {
   width: 100%;
   border-collapse: collapse;
   min-width: 300px; 
+  text-align: center;
+  padding: 5px;
 }
 
 th, td {
   padding: 8px;
   white-space: nowrap;
+}
+
+#summary p {
+  color: #850303;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+p.bg-total {
+  color: green;
 }
 
 .hidden {
@@ -180,6 +203,10 @@ th, td {
 
 
 @media (max-width: 600px) {
+
+  body {
+    overflow: visible; 
+  }
 
   button {
     border: none;
