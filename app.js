@@ -399,17 +399,8 @@ const initEditFeature = () => {
         categoryInput.value = '';
       }
     });
-  } else {
-    showError('Something went wrong')
-  }
+  } 
 };
-
-//Initialize edit feature after DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-  initEditFeature();
-})
-
-
 
 
 // Filter expense by category (pure function)
@@ -429,7 +420,9 @@ const renderFilteredExpenses = (category) => {
 
 // Initialized filter 
 const initFilter = () => {
-  const filterSelect = document.querySelector('#filter-category');
+  // Holds value selected
+  const filterSelect = document.querySelector('#filter-category'); 
+  const ResetFilterSelect = document.querySelector('#reset-filter-btn');
   if (!filterSelect){
     showError('Selection not found');
     return;
@@ -437,9 +430,21 @@ const initFilter = () => {
   filterSelect.addEventListener('change', (e) => {
     renderFilteredExpenses(e.target.value);
   });
+
+  // Reset filter
+  if (ResetFilterSelect) {
+    ResetFilterSelect.addEventListener('click', (e) => {
+      e.preventDefault();
+      filterSelect.value = 'All';
+      renderFilteredExpenses('All')
+    })
+  } else {
+    showError('Something went wrong!')
+  }
 };
 
 // Initialize filter feature after DOM loads
 document.addEventListener('DOMContentLoaded', () => {
+  initEditFeature();
   initFilter();
 })
