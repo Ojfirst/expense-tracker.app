@@ -2,7 +2,7 @@
   --primary-color: #850303;
   --secondary-color: darkslategray;
   --secondary-color2: #ff8c00;
-  --accent-color: rgb(51, 117, 51); /* Tomato */   
+  --accent-color: #337533; /* Tomato */   
   --background-color: #f0f0f0; /* Light gray */
   --font-family: 'Arial, sans-serif';
   --font-size: 16px;
@@ -50,6 +50,16 @@ button:hover {
   background-color: #dce0dc;
   color: #222;
 }
+
+#cancel-btn {
+  color: #9b2929;
+}
+
+.delete-btn {
+  background-color: #d43030;
+  color: rgb(192, 181, 181);
+}
+
 
 .btn-ty1:hover {
   transition: all 0.3s ease-in-out;

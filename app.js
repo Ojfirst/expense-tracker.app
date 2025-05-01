@@ -186,8 +186,8 @@ const renderExpenses = (expenses) => {
       <td>${expense.category}</td>
       <td>${expense.date}</td>
       <td>
-      <button data-id="${expense.id}" class='delete-btn'>Delete</button>
       <button data-id="${expense.id}" class='edit-btn btn-ty1'>Edit</button>
+      <button data-id="${expense.id}" class='delete-btn'>Delete</button>
       </td>
     `;
     // Append row to <tbody>
