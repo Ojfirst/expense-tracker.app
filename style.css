@@ -16,7 +16,7 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.5;
-  overflow: hidden;
+  overflow: auto;
   
 }   
 
@@ -56,8 +56,8 @@ button:hover {
 }
 
 .delete-btn {
-  background-color: #d43030;
-  color: rgb(192, 181, 181);
+  background-color: #ff2b2b;
+  color: rgb(240, 233, 233);
 }
 
 
