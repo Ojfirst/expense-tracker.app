@@ -273,7 +273,15 @@ p.bg-total {
   }
 
   #summary {
-    padding-top: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  #summary p {
+    font-size: 16px;
+  }
+
+  #category-totals {
+    font-size: 12px;
   }
 }
 
