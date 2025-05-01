@@ -2,7 +2,7 @@
   --primary-color: #850303;
   --secondary-color: darkslategray;
   --secondary-color2: #ff8c00;
-  --accent-color: #ff2d55; /* Tomato */   
+  --accent-color: rgb(4, 102, 4); /* Tomato */   
   --background-color: #f0f0f0; /* Light gray */
   --font-family: 'Arial, sans-serif';
   --font-size: 16px;
@@ -45,6 +45,13 @@ button:hover {
   opacity: 0.8;
   color: black;
 } 
+
+#cancel-btn, 
+#reset-filter-btn,
+.edit-btn {
+  background-color: #d8d3d3;
+  color: #333;
+}
 
 div.container {
   max-width: 1200px;
@@ -95,7 +102,8 @@ form {
 
 form input {
   padding: 10px;
-  border: 1px solid var(--secondary-color);
+  font-size: 18px;
+  border: none;
   border-radius: 4px;
   width: 100%;
   max-width: 300px;
@@ -156,12 +164,6 @@ th, td {
   white-space: nowrap;
 }
 
-#summary p {
-  color: #850303;
-  font-size: 20px;
-  font-weight: bolder;
-}
-
 p.bg-total {
   color: green;
 }
@@ -199,7 +201,10 @@ p.bg-total {
   list-style: none;
 }
 
-
+#summary p {
+  font-size: 18px;
+  font-weight: bolder;
+}
 
 
 @media (max-width: 600px) {
@@ -223,6 +228,12 @@ p.bg-total {
   form input {
     width: 96%;
     max-width: none;
+  }
+
+  .expense-list {
+    width: 95vw;
+    height: 40vh;
+
   }
 
   form select, button {
