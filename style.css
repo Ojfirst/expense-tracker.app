@@ -30,6 +30,7 @@ p {
 } 
 
 button {
+  font-weight: bold;
   background-color: var(--accent-color);
   color: white;
   border: none;
@@ -41,9 +42,10 @@ button {
 }
 
 button:hover {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.4s ease-in-out;
   opacity: 0.8;
-  color: black;
+  color: rgb(4, 112, 4);
+  background-color: rgb(178, 233, 178);
 } 
 
 .btn-ty1 {

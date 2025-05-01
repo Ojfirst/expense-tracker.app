@@ -265,9 +265,11 @@ if (table) {
   // Add click listener for event delegation
   table.addEventListener("click", (e) => {
     // Check if clicked element is a button
-    if (e.target.matches(".delete-btn")) {
+    const deleteButton = e.target.closest('.delete-btn');
+    if (deleteButton) {
       // Get expense ID
-      const id = Number(e.target.dataset.id);
+      const id = Number(deleteButton.dataset.id);
+      console.log('Delete id:', id, 'Target:', e.target)
       // Delete expense
       expenses = deleteExpense(expenses, id);
       // Save to localStorage
@@ -339,8 +341,10 @@ const initEditFeature = () => {
   const table = document.querySelector('#expense-table');
   if (table) {
     table.addEventListener('click', (e) => {
-      if (e.target.matches('.edit-btn')) {
-        const  id = Number(e.target.dataset.id);
+      // Check if clicked element is .edit-btn or inside it (e.g., <i>)
+      const editButton = e.target.closest('.edit-btn');
+      if (editButton) {
+        const  id = Number(editButton.dataset.id);
         const expense = expenses.find((exp) => exp.id === id);
         if (expense) {
           // Populate form
