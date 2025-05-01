@@ -209,6 +209,8 @@ p.bg-total {
 
 #summary {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   background-color: #e2fa5c;
   padding: 10px;
